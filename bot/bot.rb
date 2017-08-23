@@ -3,7 +3,8 @@ class Bot < SlackRubyBot::Bot
 
   SENIOR_DEV_IDS = [
     "U4SK3RBPS",
-    "U5AG3CY7M"
+    "U5AG3CY7M",
+    "U6N5LSTJR",
   ];
 
   DEV_IDS = [
@@ -12,6 +13,7 @@ class Bot < SlackRubyBot::Bot
     "U4TDX4QSH",
     "U4X6FDG95",
     "U5VFECCPM",
+    "U6JUFRGUU",
   ];
 
   # @dc = "U5RT71ZKQ"
