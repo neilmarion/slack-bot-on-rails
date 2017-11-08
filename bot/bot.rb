@@ -11,7 +11,6 @@ class Bot < SlackRubyBot::Bot
     "U5RT71ZKQ",
     "U0YL17DBQ",
     "U4TDX4QSH",
-    "U4X6FDG95",
     "U5VFECCPM",
     "U6JUFRGUU",
   ];
