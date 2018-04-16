@@ -11,13 +11,14 @@ class Bot < SlackRubyBot::Bot
     nmfdelacruz: "U4SK3RBPS",
     rickdtrick: "U5VFECCPM",
     angelique: "U4DTJAPU3",
+    pjlim: "U5ALLTPGF",
   }
 
   TECH_OPS = [:rgabriel, :jessc, :earle, :francis, :angelique]
   FCA_V2 = [:rgabriel, :earle, :francis]
   MOBILE = [:ptorre, :dc, :nmfdelacruz]
   COMMERCIAL = [:nmfdelacruz, :ptorre, :dc, :rickdtrick]
-  FRONTEND = [:rickdtrick, :francis]
+  FRONTEND = [:rickdtrick, :francis, :pjlim]
   ALL = [
     :rgabriel,
     :ptorre,
@@ -48,10 +49,10 @@ teams:
   fca_v2 (rgabriel, earle, francis)
   mobile (ptorre, dc, nmfdelacruz)
   commercial (nmfdelacruz, ptorre, dc, rickdtrick)
-  frontend (rickdtrick, francis)
+  frontend (rickdtrick, francis, pjlim)
 
 members:
-  angelique, dc, earle, francis, jessc, nmfdelacruz, ptorre, rgabriel, rickdtrick
+  angelique, dc, earle, francis, jessc, nmfdelacruz, ptorre, rgabriel, rickdtrick, pjlim
 
 examples:
   1. @plankbot review -R first-circle-app -P 6672 -X nmfdelacruz,rickdtrick
