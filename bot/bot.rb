@@ -14,6 +14,11 @@ class Bot < SlackRubyBot::Bot
     pjlim: "U5ALLTPGF",
   }
 
+  QA_IDS = {
+    mikej: "U5134F0RE",
+    rjomosura: "U63NEQ087",
+  }
+
   TECH_OPS = [:rgabriel, :jessc, :earle, :francis, :angelique]
   FCA_V2 = [:rgabriel, :earle, :francis]
   MOBILE = [:ptorre, :dc, :nmfdelacruz]
@@ -43,6 +48,7 @@ Options:
   -P    pull request number
   -T    team name
   -X    ommit member, comma separated and no spaces between
+  -Q    staging branch (request for QA review)
 
 teams:
   tech_ops (rgabriel, jessc, earle, francis, angelique)
@@ -58,6 +64,7 @@ examples:
   1. @plankbot review -R first-circle-app -P 6672 -X nmfdelacruz,rickdtrick
   2. @plankbot review -R fca_mobile_react -P 102 -T mobile
   3. @plankbot review -R first-circle-account -P 13 -T fca_v2 -X francis
+  4. @plankbot review -R first-circle-app -P 6672 -Q staging-apollo
 
 PROCESS SUMMARY:
       make branch
@@ -129,6 +136,7 @@ wake up:
     url_options = {}
     chosen_team = ALL
     members_to_ommit = []
+    staging_env = nil
 
     string_array.each_with_index do |e, counter|
       next if counter % 2 == 1
@@ -142,6 +150,8 @@ wake up:
         chosen_team = team(string_array[counter + 1])
       when "-X"
         members_to_ommit = string_array[counter + 1].split(',')
+      when "-Q"
+        staging_env = string_array[counter + 1]
       end
     end
 
@@ -149,7 +159,11 @@ wake up:
 
     chosen_reviewer_ids.map{|e| "<@#{e}>"}
 
-    message = "Hi #{chosen_reviewer_ids.map{|e| "<@#{e}>"}.join(" and ")}! <@#{data.user}> asked to review #{build_url(url_options)}"
+    qa_team_call_out_string = if staging_env
+      "Also, QA team (#{QA_IDS.values.map{|id| "<@#{id}>"}.join("or ")}) to review it in #{staging_env}"
+    end
+
+    message = "Hi #{chosen_reviewer_ids.map{|e| "<@#{e}>"}.join(" and ")}! <@#{data.user}> asked to code-review #{build_url(url_options)}. #{qa_team_call_out_string}"
     client.say({
       channel: data.channel,
       text: message,
