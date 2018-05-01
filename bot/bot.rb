@@ -143,7 +143,8 @@ wake up:
 
       case e
       when "-R"
-        url_options[:repo] = string_array[counter + 1]
+        repo = string_array[counter + 1].split("|").last.gsub(/>/, '')
+        url_options[:repo] = repo
       when "-P"
         url_options[:pr_no] = string_array[counter + 1]
       when "-T"
