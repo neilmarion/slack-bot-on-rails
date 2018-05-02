@@ -12,6 +12,7 @@ class Bot < SlackRubyBot::Bot
     rickdtrick: "U5VFECCPM",
     angelique: "U4DTJAPU3",
     pjlim: "U5ALLTPGF",
+    tony: "U053W4Q99",
   }
 
   QA_IDS = {
@@ -49,6 +50,7 @@ Options:
   -T    team name
   -X    ommit member, comma separated and no spaces between
   -Q    staging branch (request for QA review)
+  -A    Add another code reviewer, comma separated and no spaces between
 
 teams:
   tech_ops (rgabriel, jessc, earle, francis, angelique)
@@ -58,13 +60,14 @@ teams:
   frontend (rickdtrick, francis, pjlim)
 
 members:
-  angelique, dc, earle, francis, jessc, nmfdelacruz, ptorre, rgabriel, rickdtrick, pjlim
+  angelique, dc, earle, francis, jessc, nmfdelacruz, ptorre, rgabriel, rickdtrick, pjlim, tony
 
 examples:
   1. @plankbot review -R first-circle-app -P 6672 -X nmfdelacruz,rickdtrick
   2. @plankbot review -R fca_mobile_react -P 102 -T mobile
   3. @plankbot review -R first-circle-account -P 13 -T fca_v2 -X francis
   4. @plankbot review -R first-circle-app -P 6672 -Q staging-apollo
+  5. @plankbot review -R first-circle-app -P 321 -A tony,earle
 
 PROCESS SUMMARY:
       make branch
@@ -137,6 +140,7 @@ wake up:
     chosen_team = ALL
     members_to_ommit = []
     staging_env = nil
+    additional_reviewer_ids = []
 
     string_array.each_with_index do |e, counter|
       next if counter % 2 == 1
@@ -153,10 +157,12 @@ wake up:
         members_to_ommit = string_array[counter + 1].split(',')
       when "-Q"
         staging_env = string_array[counter + 1]
+      when "-A"
+        additional_reviewer_ids = string_array[counter + 1].split(',').map{|x| DEV_IDS[x.to_sym]}
       end
     end
 
-    chosen_reviewer_ids = randomize(chosen_team, members_to_ommit, data.user)
+    chosen_reviewer_ids = randomize(chosen_team, members_to_ommit, data.user) + additional_reviewer_ids
 
     chosen_reviewer_ids.map{|e| "<@#{e}>"}
 
