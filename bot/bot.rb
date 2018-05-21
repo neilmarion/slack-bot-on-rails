@@ -20,11 +20,10 @@ class Bot < SlackRubyBot::Bot
     rjomosura: "U63NEQ087",
   }
 
-  TECH_OPS = [:rgabriel, :jessc, :earle, :francis, :angelique]
-  FCA_V2 = [:rgabriel, :earle, :francis]
-  MOBILE = [:ptorre, :dc, :nmfdelacruz]
-  COMMERCIAL = [:nmfdelacruz, :ptorre, :dc, :rickdtrick]
-  FRONTEND = [:rickdtrick, :francis, :pjlim]
+  TECH_OPS = [:jessc, :earle, :francis, :angelique, :ptorre]
+  MOBILE = [:dc, :nmfdelacruz]
+  COMMERCIAL = [:nmfdelacruz, :dc, :rickdtrick]
+  FRONTEND = [:rickdtrick, :pjlim]
   ALL = [
     :rgabriel,
     :ptorre,
@@ -94,8 +93,6 @@ wake up:
     case team
     when "tech_ops"
       TECH_OPS
-    when "fca_v2"
-      FCA_V2
     when "mobile"
       MOBILE
     when "commercial"
