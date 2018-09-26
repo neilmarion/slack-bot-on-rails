@@ -2,7 +2,6 @@ class Bot < SlackRubyBot::Bot
   # Getting user slack user ids https://slack.com/api/users.list?token=xoxp-5132160299-162649861808-214565164807-14d6f103c6022ed767e25f26a027ffaa&pretty=1
 
   DEV_IDS = {
-    rgabriel: "U6JUFRGUU",
     ptorre: "U890X3XL2",
     jessc: "U6N5LSTJR",
     dc: "U5RT71ZKQ",
@@ -25,7 +24,6 @@ class Bot < SlackRubyBot::Bot
   COMMERCIAL = [:nmfdelacruz, :dc, :rickdtrick]
   FRONTEND = [:rickdtrick, :pjlim]
   ALL = [
-    :rgabriel,
     :ptorre,
     :jessc,
     :dc,
@@ -52,14 +50,14 @@ Options:
   -A    Add another code reviewer, comma separated and no spaces between
 
 teams:
-  tech_ops (rgabriel, jessc, earle, francis, angelique)
-  fca_v2 (rgabriel, earle, francis)
+  tech_ops (jessc, earle, francis, angelique)
+  fca_v2 (earle, francis)
   mobile (ptorre, dc, nmfdelacruz)
   commercial (nmfdelacruz, ptorre, dc, rickdtrick)
   frontend (rickdtrick, francis, pjlim)
 
 members:
-  angelique, dc, earle, francis, jessc, nmfdelacruz, ptorre, rgabriel, rickdtrick, pjlim, tony
+  angelique, dc, earle, francis, jessc, nmfdelacruz, ptorre, rickdtrick, pjlim, tony
 
 examples:
   1. @plankbot review -R first-circle-app -P 6672 -X nmfdelacruz,rickdtrick
@@ -158,6 +156,8 @@ wake up:
         additional_reviewer_ids = string_array[counter + 1].split(',').map{|x| DEV_IDS[x.to_sym]}
       end
     end
+
+    additional_reviewer_ids << DEV_IDS[:rickdtrick] if url_options[:repo] == 'first-circle-account' && data.user != 'rickdtrick'
 
     chosen_reviewer_ids = randomize(chosen_team, members_to_ommit, data.user) + additional_reviewer_ids
 
